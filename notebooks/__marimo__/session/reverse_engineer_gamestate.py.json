@@ -1,0 +1,165 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "72edc346c3fa3ead7d7c0eb59ee32ae6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "bc5e73d348b837332c72503440c449fd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "ac6a18833e0c5184bc00953cbed89a60",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "cb20f0433a156f611de6a535944725b8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "39141eb9a599550b70813480a544ca5f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "00000000: 80 3a 5a 40 7a 00 00 00 04 00 03 02 00 10 05 08 .:Z@z...........\n00000010: 00 40 2f a8 52 02 08 00 02 02 00 f1 08 01 01 01 .@/.R...........\n00000020: 00 00 02 02 0e 50 6f 6e 64 20 6f 66 20 50 69 75 .....Pond of Piu\n00000030: 73 75 6d 12 1d 00 f1 12 0e 00 00 00 01 00 02 00 sum.............\n00000040: 04 00 06 00 07 00 08 00 09 00 0a 00 0b 00 0c 00 ................\n\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "XneR",
+      "code_hash": "d3be136e3b6517acdd856c9fc263129b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "hLda",
+      "code_hash": "0bda520bec86aab2eef4f794b478523b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Now, we can play through a game and capture the gamestate after every move.</span>\n<span class=\"paragraph\">The gamestate is only written to disk on a save (exiting to the main menu), so be sure to do that in between moves.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DmCq",
+      "code_hash": "9ceb9490d540064e46722eb238026a84",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "WRId",
+      "code_hash": "f4c169ce00a560719db89fc4b3ea05a9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='WRId-0' random-id='f4a510e3-38d8-e33b-b68b-4a75b9928fdc'><marimo-button data-initial-value='0' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eCapture gamestate&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-kind='&quot;neutral&quot;' data-disabled='false' data-full-width='false'></marimo-button></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "What move did you just make?  game init\nWhat move did you just make?  harvest fruit\nWhat move did you just make?  harvest fruit / upgrate city with workshop\nWhat move did you just make?  move warrior\nWhat move did you just make?  end turn\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "What move did you just make?  REDUNDANT\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "qvQs",
+      "code_hash": "797b4a23faa626d2e61986c7faa61dfb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[6, 0]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "fpUY",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

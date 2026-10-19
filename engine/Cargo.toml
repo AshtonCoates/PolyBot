@@ -1,0 +1,15 @@
+[package]
+name = "polytopia-engine"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "polytopia_engine"
+# cdylib so this can later be built as a Python extension module via
+# maturin/PyO3; rlib so it stays usable as an ordinary Rust dependency
+# (e.g. from a headless training harness or CLI written in Rust).
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

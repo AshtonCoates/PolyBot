@@ -1,0 +1,61 @@
+.claude
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# uv
+.uv/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Captured savestate snapshots
+/captures/
+
+# Trained model checkpoints
+/models/
+
+# Rust build output (workspace-wide, shared by all crates)
+/target/
+
+# maturin/PyO3 build artifacts
+*.so
+*.pyd
