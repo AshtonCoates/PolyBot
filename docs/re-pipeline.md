@@ -21,19 +21,27 @@ decompiler (Ghidra).
    a directory outside the Cpp2IL checkout.
 3. **Rule tables**: `re/scripts/extract_unity_assets.py` (UnityPy, run in an isolated venv with
    `python -I`) pulls TextAssets out of `data.unity3d`. Latest rules copy: `re/data/GameLogicData28.json`.
-4. **Decompilation (running)**: headless Ghidra imports `GameAssembly.so`, auto-analyses, then
-   `re/scripts/ghidra/ApplyIl2cppNames.java` names functions from the TSV. Project saved to
-   `~/src/polybot_re_out/ghidra_proj`.
+4. **Ghidra project (done, "lean" approach)**: full auto-analysis was abandoned: after 31 min it was still inside
+   `CallFixupAnalyzer` with no progress indicator (and tens of thousands of harmless exception-table errors).
+   Instead, import with analysis off and let a script create + name a function at every Cpp2IL address:
    ```
    GHIDRA_HEADLESS_MAXMEM=6G ~/src/tools/ghidra_12.1.4/support/analyzeHeadless \
-     ~/src/polybot_re_out/ghidra_proj polytopia -import "<game dir>/GameAssembly.so" \
+     ~/src/polybot_re_out/ghidra_proj_lean polytopia -import "<game dir>/GameAssembly.so" -noanalysis \
      -scriptPath re/scripts/ghidra -postScript ApplyIl2cppNames.java ~/src/polybot_re_out/method_addresses.tsv
    ```
-   Assumption not yet checked: Ghidra address = image base + Cpp2IL VA. The script prints the image
-   base and a named/created/noCode/failed count to the log; if most fail, fix the offset and rerun
-   only the naming step on the saved project.
-5. **Querying**: once the project is saved, decompile target methods from it (REA or headless
-   scripts). Not done yet.
+   Takes about 5 minutes. Ghidra image base is 0x100000, so address = 0x100000 + Cpp2IL VA (verified).
+   Result: 112,961 methods named, 112,731 functions created, 0 failures. Names look like `Type__Method`
+   (non-alphanumerics become `_`; nested types use `Outer_Inner`; duplicate names get a `_<va>` suffix).
+5. **Decompile on demand**: `re/scripts/ghidra/DecompileFunctions.java` writes `<name>.c` for every function whose
+   name matches one of the given regexes:
+   ```
+   GHIDRA_HEADLESS_MAXMEM=4G ~/src/tools/ghidra_12.1.4/support/analyzeHeadless \
+     ~/src/polybot_re_out/ghidra_proj_lean polytopia -process GameAssembly.so -noanalysis -readOnly \
+     -scriptPath re/scripts/ghidra -postScript DecompileFunctions.java ~/src/polybot_re_out/decomp "AttackCommand__.*"
+   ```
+   Output goes to `~/src/polybot_re_out/decomp/`. Reading tips: `param_N + 0xNN` is a field at that offset (compare with
+   the offsets in `diffable-cs`); `func_0x02b05f20(...)` calls are il2cpp runtime boilerplate (metadata init, casts,
+   null/type checks) and can be skipped; calls to named methods are the real logic.
 
 ## Decompilation targets, in order
 `GameState.Serialize/Deserialize` (savestate format) -> `BattleHelpers`, `MoveCommand`,

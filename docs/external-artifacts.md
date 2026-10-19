@@ -29,8 +29,10 @@ Big or third-party files are kept out of git. Everything here can be regenerated
 | `isil/IsilDump/` | Per-method x86 disassembly and ISIL; no addresses. 356 MB, probably not needed | `Cpp2IL --output-as isil` |
 | `method_addresses.tsv` | 112,964 rows: va, rva, file offset, type, method, signature | `re/scripts/addrmap` |
 | `unity_assets/` | 38 text assets from `data.unity3d`, including `GameLogicData1..28_*.txt` (rules JSON) | `re/scripts/extract_unity_assets.py` |
-| `ghidra_proj/` | Persistent Ghidra project `polytopia` (analysis + applied names) | headless job in re-pipeline.md |
-| `ghidra_headless.log` | Log of that job | n/a |
+| `ghidra_proj_lean/` | Persistent Ghidra project `polytopia`: no auto-analysis, 112k functions created and named. **Use this one.** | re-pipeline.md step 4 |
+| `ghidra_lean.log` | Log of that job | n/a |
+| `decomp/` | Decompiled functions (`Type__Method.c`), produced on demand | re-pipeline.md step 5 |
+| `ghidra_proj/`, `ghidra_headless.log` | Abandoned first attempt (full analysis, killed); empty project, safe to delete | n/a |
 
 ## Scratchpad (temporary, session-scoped)
 `/tmp/claude-1000/-home-eaglehawkinator-src-polybot/<session id>/scratchpad/`

@@ -1,5 +1,6 @@
 // Applies Cpp2IL method names (method_addresses.tsv) to the open program.
-// Usage (headless): -postScript ApplyIl2cppNames.java /path/to/method_addresses.tsv
+// Usage (headless, analysis can be off): -postScript ApplyIl2cppNames.java /path/to/method_addresses.tsv
+// Creates a function at every known method start (if missing) and names it.
 //@category IL2CPP
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
@@ -25,6 +26,12 @@ public class ApplyIl2cppNames extends GhidraScript {
                 String[] f = line.split("\t");
                 if (f.length < 5) continue;
                 total++;
+                if (total % 10000 == 0) println("progress " + total + " named=" + named);
+                if (total == 200 && created + named < 50) {
+                    println("ABORT: addresses do not line up (image base 0x" + Long.toHexString(base)
+                        + "); created=" + created + " named=" + named + " noCode=" + noCode);
+                    return;
+                }
                 long va = Long.parseUnsignedLong(f[0].substring(2), 16);
                 Address a = toAddr(base + va);
                 String name = clean(f[3]) + "__" + clean(f[4]);
