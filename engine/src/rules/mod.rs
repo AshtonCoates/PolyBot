@@ -57,6 +57,8 @@ impl From<serde_json::Error> for RulesError {
 pub struct TribeData {
     pub name: String,
     pub game_idx: u32,
+    /// Default player colour (RGB packed in an int).
+    pub color: i32,
     pub climate: u32,
     pub bonus: u32,
     pub category: u32,
@@ -73,6 +75,8 @@ pub struct TribeData {
     pub unit_overrides: Vec<(UnitId, UnitId)>,
     pub tech_overrides: Vec<(TechId, TechId)>,
     pub improvement_overrides: Vec<(ImprovementId, ImprovementId)>,
+    /// Comma-separated syllables used to make city names.
+    pub language: String,
 }
 
 #[derive(Debug, Clone)]
@@ -238,6 +242,29 @@ impl Rules {
         self.resource_terrains[resource as usize]
     }
 
+    /// The rules bundled with the crate (`re/data/GameLogicData28.json`, the current game version).
+    pub fn bundled() -> Rules {
+        Rules::from_json(include_str!("../../../re/data/GameLogicData28.json"))
+            .expect("bundled rules are valid")
+    }
+
+    /// Look up a unit by the game's own numeric type id (as stored in savestates).
+    pub fn unit_by_game_idx(&self, idx: u32) -> Option<&UnitData> {
+        self.units.iter().find(|u| u.game_idx == idx)
+    }
+
+    pub fn tribe_by_game_idx(&self, idx: u32) -> Option<&TribeData> {
+        self.tribes.iter().find(|t| t.game_idx == idx)
+    }
+
+    pub fn tech_by_game_idx(&self, idx: u32) -> Option<&TechData> {
+        self.techs.iter().find(|t| t.game_idx == idx)
+    }
+
+    pub fn improvement_by_game_idx(&self, idx: u32) -> Option<&ImprovementData> {
+        self.improvements.iter().find(|i| i.game_idx == idx)
+    }
+
     pub fn from_json(json: &str) -> Result<Rules, RulesError> {
         // Via `Value` on purpose: the data has a duplicated key (`rituals.cost`, same value
         // twice), which serde's derive rejects but `Value` accepts (last one wins).
@@ -368,6 +395,7 @@ fn compile(raw: raw::RawRules) -> Result<Rules, RulesError> {
             TribeData {
                 name: (*name).clone(),
                 game_idx: t.idx,
+                color: t.color,
                 climate: t.climate,
                 bonus: t.bonus,
                 category: t.category,
@@ -387,6 +415,7 @@ fn compile(raw: raw::RawRules) -> Result<Rules, RulesError> {
                     name,
                     &t.improvement_overrides,
                 ),
+                language: t.language.clone(),
             }
         })
         .collect();

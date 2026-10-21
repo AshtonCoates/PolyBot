@@ -1,5 +1,6 @@
 // Decompiles every function whose name fully matches one of the given regexes.
 // Usage: -postScript DecompileFunctions.java <outDir> <regex> [<regex> ...]
+// Per-function time limit: environment variable DECOMP_TIMEOUT (seconds, default 120).
 // Writes <outDir>/<function name>.c. Works on the lean project (no auto-analysis needed).
 //@category IL2CPP
 import ghidra.app.decompiler.DecompInterface;
@@ -22,6 +23,8 @@ public class DecompileFunctions extends GhidraScript {
         List<Pattern> pats = new ArrayList<>();
         for (int i = 1; i < args.length; i++) pats.add(Pattern.compile(args[i]));
 
+        String tv = System.getenv("DECOMP_TIMEOUT");
+        int timeout = tv == null ? 120 : Integer.parseInt(tv);
         DecompInterface di = new DecompInterface();
         di.openProgram(currentProgram);
         int done = 0, failed = 0;
@@ -32,7 +35,7 @@ public class DecompileFunctions extends GhidraScript {
             boolean hit = false;
             for (Pattern p : pats) if (p.matcher(name).matches()) { hit = true; break; }
             if (!hit) continue;
-            DecompileResults r = di.decompileFunction(f, 120, monitor);
+            DecompileResults r = di.decompileFunction(f, timeout, monitor);
             if (!r.decompileCompleted()) {
                 failed++;
                 println("FAILED " + name + ": " + r.getErrorMessage());

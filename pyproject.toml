@@ -13,6 +13,7 @@ dependencies = [
 
 [project.scripts]
 capture-gamestate = "polybot.capture.capture:main"
+import-savestate = "polybot.capture.import_state:main"
 
 [build-system]
 requires = ["hatchling"]

@@ -30,6 +30,7 @@ pub struct RawIdx {
 #[serde(rename_all = "camelCase")]
 pub struct RawTribe {
     pub idx: u32,
+    pub color: i32,
     pub climate: u32,
     pub bonus: u32,
     pub category: u32,
@@ -52,6 +53,8 @@ pub struct RawTribe {
     pub tech_overrides: BTreeMap<String, String>,
     #[serde(default)]
     pub improvement_overrides: BTreeMap<String, String>,
+    #[serde(default)]
+    pub language: String,
 }
 
 #[derive(Debug, Deserialize)]
